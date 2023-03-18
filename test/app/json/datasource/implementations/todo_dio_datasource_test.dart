@@ -28,7 +28,7 @@ void main() {
     expect(result.isSuccess(), true);
   });
 
-  test('Datasource should return me failure', () async {
+  test('Datasource should return me failure statuscode = 404', () async {
     //arrage
     final error = DioError(
       response: Response(statusCode: 404, requestOptions: RequestOptions()),
@@ -37,12 +37,10 @@ void main() {
       requestOptions: RequestOptions(),
     );
     //act
-    when(() => dio.get('')).thenThrow(
-      (_) async => error,
-    );
+    when(() => dio.get(any())).thenThrow(error);
     //assert
     final result = await datasource.getTodos();
-    expect(result.isError(), true);
+    expect(result.isSuccess(), false);
   });
 }
 
